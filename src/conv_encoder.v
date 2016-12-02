@@ -9,7 +9,7 @@ module conv_encoder(
 reg [2:0] regs;
 reg status;
 
-always @(posedge clk_div2) begin
+always @(posedge clk_div2, negedge rst_n) begin
     if (!rst_n) begin
         regs <= 0;
     end else begin
@@ -17,9 +17,9 @@ always @(posedge clk_div2) begin
     end
 end
 
-always @(posedge clk) begin
+always @(posedge clk, negedge rst_n) begin
     if (!rst_n) begin
-        status <=  0;
+        status <= 1;
         y <= 0;
     end else begin
         status <= ~status;
