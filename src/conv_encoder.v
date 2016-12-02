@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module conv_coder(
+module conv_encoder(
   input  clk,
   input  clk_div2,
   input  x,
