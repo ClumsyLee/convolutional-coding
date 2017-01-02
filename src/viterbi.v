@@ -1,4 +1,3 @@
-// `timescale 1ns / 1ps
 /*
 版本一：每七位中两位0收尾，不停顿
 即输入信号在编码前的格式应为：
@@ -6,24 +5,24 @@ xxxxx00xxxxx00xxxxx00.....
 x为数据，0为收尾所添加的0
 */
 module viterbi(
-  input  clk,//??
-  input  clk_div2,//?????
-  input  rst_n,  //????
-  input  x,//????
-  output y,//????
-  output c,//????
-  output reg rd,
-  output reg ready//??????
+  input  clk,       // clock of decoding
+  input  clk_div2,  // clock of output
+  input  rst_n,     // reset
+  input  x,         // input code
+  output y,         // output
+  output c,         // path of decoding
+  output reg rd,    // signal to receive decoidng
+  output reg ready
   );
 
-  reg[13:0]     x_t,x_t1;//?????????????
-  reg[3:0]      cnt;//?????????+1
-  reg[2:0]      cnt2;//???????????+1
-  reg[13:0]     a_out,a_out1,a1,a2,a3,a4;//???????????abcd????????
-  reg[3:0]      c1,c2,c3,c4; //??
-  reg[6:0]      c_t1,c_t2,c_t3,c_t4;//????
-  reg[6:0]      c_t5;//??????
-  reg[6:0]      c_t;
+  reg[13:0]     x_t,x_t1;
+  reg[3:0]      cnt;   // counting variable of clk
+  reg[2:0]      cnt2;  // counting variable of clk_div2
+  reg[13:0]     a_out,a_out1,a1,a2,a3,a4;  // path of decoding
+  reg[3:0]      c1,c2,c3,c4;          // cost when a,b,c,d is the last node
+  reg[6:0]      c_t1,c_t2,c_t3,c_t4;  // decoding when a,b,c,d is the last node
+  reg[6:0]      c_t5;  // intermediate variable of decoding
+  reg[6:0]      c_t;   // decoding
    always@(posedge clk)begin
    if(!rst_n)begin
         x_t   <=  0;
@@ -407,9 +406,9 @@ module viterbi(
       end
      else begin
       ready  <= 0;
-    a_out1[13:0] <= {a_out1[0],a_out1[13:1]};//?????????????????
+    a_out1[13:0] <= {a_out1[0],a_out1[13:1]};  // shift the register of path of decoding to output
     if(cnt[0]==1)
-       c_t[6:0]  <= {c_t[5:0],c_t[6]};//?????
+       c_t[6:0]  <= {c_t[5:0],c_t[6]};  // shift the register of decoding to output
    end
     end
   end
