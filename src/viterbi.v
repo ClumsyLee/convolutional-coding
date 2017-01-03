@@ -406,9 +406,11 @@ module viterbi(
       end
      else begin
       ready  <= 0;
-    a_out1[13:0] <= {a_out1[0],a_out1[13:1]};  // shift the register of path of decoding to output
+    // shift the register of path of decoding to output
+    a_out1[13:0] <= {a_out1[0],a_out1[13:1]};
     if(cnt[0]==1)
-       c_t[6:0]  <= {c_t[5:0],c_t[6]};  // shift the register of decoding to output
+       // shift the register of decoding to output
+       c_t[6:0]  <= {c_t[5:0],c_t[6]};
    end
     end
   end
